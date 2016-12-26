@@ -11,7 +11,7 @@ namespace arraySample
 {
     public partial class Form1 : Form
     {
-        Inst inst = null; // define inst class
+        Inst inst = null; // определим inst class
         public Form1()
         {
             InitializeComponent();
@@ -34,34 +34,37 @@ namespace arraySample
             {
                 try
                 {
-                    listBox1.Items.Add(String.Concat("index = ", Convert.ToString(j)," = ", Convert.ToString(inst.ar[j])));
+                    // вывод исходной части массива
+                    // index = n = число
+                    listBox1.Items.Add(String.Concat("index =  ", Convert.ToString(j), "     =    ", Convert.ToString(inst.ar[j])));
                 }
-                catch (NullReferenceException e)
-                {
-                    // MessageBox.Show("Null exception");
-                }
+                catch (NullReferenceException e){/* MessageBox.Show("Null exception");*/}
             }
 
             for (int j = 15; j < 30; j++)
             {
                 try
                 {
-                    listBox2.Items.Add(String.Concat("index = ", Convert.ToString(j), " = ", Convert.ToString(inst.ar[j])));
+                    // вывод преобразованной части массива
+                    // index = n = число
+                    listBox2.Items.Add(String.Concat("index = ", Convert.ToString(j), "   =   ", Convert.ToString(inst.ar[j])));
                 }
-                catch (NullReferenceException e)
-                {
-                    // MessageBox.Show("Null exception");
-                }
+                catch (NullReferenceException e) {/* MessageBox.Show("Null exception");*/}
             }
         }
     }
 
     // ---------------------------------------------------------------------------------------------------------------------
-    // it class proposed for moving elements "inside" one array;
+    // Этот класс задуман для перемещения элементов "внутри" одного массива
     public class Inst
     {
-        // it handles 15 elements in one array
-        public int[] ar = new int[30]; //  three dimensioned
+        // этот массив хранит 15 элементов
+        public int[] ar = new int[30]; 
+        /*
+         * Размерность увеличена в два раза, чтобы помещать во второй части перемещенные элементы
+         * От 0 до 14 включительно содержатся исходные элементы (и исходный массив)
+         * От 15 до 29 включительно содержатся перемещенные элементы (из исходного массива)
+         */
 
         int neg_ind = 0;
         int nul_ind = 0;
@@ -71,12 +74,13 @@ namespace arraySample
 
         public Inst(Form form)
         {
-            // constructor
-            // ar.Initialize(); // init array
+            // конструктор класса
+            // инициализация массива нулями
             for (int i = 0; i < 30; i++)
             {
                 ar[i] = 0;
             }
+            // здесь мы пишем свои значения для массива
             ar[0] = -1;
             ar[1] = 15;
             ar[2] = 0;
@@ -92,6 +96,7 @@ namespace arraySample
             ar[12] = 0;
             ar[13] = 1;
             ar[14] = -1;
+
             this.form = form;
         }
 
@@ -99,36 +104,15 @@ namespace arraySample
         {
             this.list = box;
         }
-
         
+        // главная функция класса
         public void process()
         {
             placeNegatives();
             placeNulls();
             placePositives();
-
-            printResult();
         }
 
-        // 0:14 = source
-        // 15:30 = neg
-        // 31:46 = nul
-        // 47:61 = pos
-
-        private void printResult()
-        {
-            for (int j = 0; j < 31; j++)
-            {
-                try
-                {
-                    list.Items.Add(String.Concat("index = ", Convert.ToString(j), Convert.ToString(ar[j])));
-                }
-                catch (NullReferenceException e)
-                {
-                    // MessageBox.Show("Null exception");
-                }
-            }
-        }
         private void placeNegatives()
         {
             //15-30
@@ -160,7 +144,7 @@ namespace arraySample
                     nul_ind++;
                 }
             }
-            MessageBox.Show(String.Concat("null index = ",Convert.ToString(nul_ind)));
+            // MessageBox.Show(String.Concat("null index = ",Convert.ToString(nul_ind)));
         }
         private void placePositives()
         {
@@ -177,7 +161,7 @@ namespace arraySample
                     pos_ind++;
                 }
             }
-            MessageBox.Show(String.Concat("pos index = ", Convert.ToString(pos_ind)));
+            // MessageBox.Show(String.Concat("pos index = ", Convert.ToString(pos_ind)));
         }
     }
 }
