@@ -1,0 +1,2 @@
+# arraySample
+array sample
